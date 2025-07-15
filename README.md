@@ -14,20 +14,20 @@ In addition to the Security Gateway, it provides firewall rule configuration, an
 * The Go programming language (this is pre-installed on Cloud Shell).
 
 ---
-## 1. Set Up the Custom Terraform Provider
+## 1. Set Up the custom terraform provider
 
 These steps compile and install a specific version of the Terraform Google Provider locally. This is required before initializing this project's configuration.
 
 All commands should be run from your Google Cloud Shell terminal.
 
-#### **A. Clone the Provider Source Code**
-This command downloads the source code for the Terraform Google Provider.
+#### **A. Clone the provider source code**
+This command downloads the source code for the terraform Google provider.
 
 ```bash
 git clone https://github.com/hashicorp/terraform-provider-google.git $GOPATH/src/github.com/hashicorp/terraform-provider-google
 ```
 
-### **B. Build the Provider from Source**
+#### **B. Build the provider from Source**
 Next, navigate into the directory and compile the provider binary using Go.
 
 ```bash
@@ -35,7 +35,7 @@ cd $GOPATH/src/github.com/hashicorp/terraform-provider-google
 go build -o terraform-provider-google
 ```
 
-### **C. Install the Local Provider Plugin**
+#### **C. Install the local provider plugin**
 Finally, create the required directory structure and copy the compiled provider into it. Terraform will automatically discover and use this local plugin during initialization.
 
 ```bash
@@ -47,9 +47,9 @@ cp $GOPATH/src/github.com/hashicorp/terraform-provider-google/terraform-provider
 With the provider set up, you can now deploy the security gateway infrastructure.
 
 ---
-## 2. Deploy the Infrastructure
+## 2. Deploy the infrastructure
 
-#### **A. Clone this Repository**
+#### **A. Clone this repository**
 Clone this repository into your Cloud Shell environment.
 
 ```bash
@@ -57,7 +57,7 @@ cd ~
 git clone https://github.com/alextcowan/sgw-poc-terraform.git
 cd sgw-poc-terraform
 ```
-#### **B. Configure Variables**
+#### **B. Configure variables**
 Create a `terraform.tfvars` file to define your environment. You can use the `terraform.tfvars.example` file as a reference.
 
 *Example `terraform.tfvars`:*
@@ -66,7 +66,7 @@ project_id = "your-gcp-project-id"
 region     = ["australia-southeast1"]
 # ... other variables
 ```
-#### **C. Modify PAC File**
+#### **C. Modify PAC file**
 Modify the `const sites` portion of the included sgw-pac.js file to match your hostname matchers.  
 
 *Example `sgw-pac.js`:*
@@ -83,8 +83,8 @@ function FindProxyForURL(url, host) {
   return 'DIRECT';
 }
 ```
-#### **D. Initialize and Apply**
-Initialize Terraform to download the necessary plugins (it will use the local provider you just built) and then apply the configuration to create the resources.
+#### **D. Initialize and apply**
+Initialize terraform to download the necessary plugins (it will use the local provider you just built) and then apply the configuration to create the resources.
 
 ```bash
 terraform init
@@ -95,7 +95,7 @@ Review the plan and type `yes` to proceed.
 
 ---
 ## 3. Chrome Configuration
-The admin will need to configure Chrome to leverage proxy mode via the Security Gateway and deployment of the Chrome Enterprise Premium Extension.
+The admin will need to configure Chrome to leverage proxy mode via the Security Gateway and deployment of the Chrome Enterprise Premium extension.
 
 [Configure Google Chrome proxy mode](https://cloud.google.com/beyondcorp-enterprise/docs/security-gateway-saas-apps#configure-chrome-proxy)
 
