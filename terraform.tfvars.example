@@ -1,0 +1,40 @@
+# # The GCP project ID to deploy resources to
+project_id = "cep-project"
+
+# # Admin defined id for SGW creation
+security_gateway_id = "sgw-sbc-id"
+
+# # Admin defined display name of SGW
+display_name = "SBC Gateway"
+
+# # SGW Region(s)
+region = ["asia-south1"]
+
+# # Groups / Users that will have access to SGW/Apps
+access_members = ["group:sgw-users@securebrowsing.cloud"]
+
+# # Full resource name of VPC network
+vpc_network = "projects/cep-project/global/networks/default"
+
+# # A map of application configurations to be created
+ applications = {
+   "crm" = {
+     display_name = "CRM PWA"
+     hostnames    = ["crm.onprem.securebrowsing.cloud"]
+     is_pwa       = true
+   },
+   "ipify" = {
+     display_name = "ipify"
+     hostnames    = ["ipify.org"]
+     is_pwa       = false
+   }
+ }
+
+# # The GCP region for the storage bucket
+bucket_region = "australia-southeast1"
+
+# # The globally unique name for the GCS bucket
+bucket_name = "sbc-sgw-pac-bucket"
+
+# # The local path to the pac file to upload
+pac_file_path = "./sgw-pac.js"
