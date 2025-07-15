@@ -73,7 +73,7 @@ Modify the `const sites` portion of the included sgw-pac.js file to match your h
 ```javascript
 function FindProxyForURL(url, host) {
   const PROXY = "HTTPS ingress.cloudproxy.app:443";
-  const sites = ["ipify.org", "ipinfo.io", "microsoftonline.com", "onprem.securebrowsing.cloud"]; // add URLs to match all of your CAG app domains
+  const sites = ["ipify.org", "onprem.securebrowsing.cloud"];
 
   for (const site of sites) {
     if (shExpMatch(url, 'https://' + site + '/*') || shExpMatch(url, '*.' + site + '/*')) {
@@ -94,7 +94,15 @@ terraform apply
 Review the plan and type `yes` to proceed.
 
 ---
-## 3. Cleanup
+## 3. Chrome Configuration
+The admin will need to configure Chrome to leverage proxy mode via the Security Gateway and deployment of the Chrome Enterprise Premium Extension.
+
+[Configure Google Chrome proxy mode](https://cloud.google.com/beyondcorp-enterprise/docs/security-gateway-saas-apps#configure-chrome-proxy)
+
+[Install the Chrome Enterprise Premium extension](https://cloud.google.com/beyondcorp-enterprise/docs/security-gateway-saas-apps#install-cep-extension)
+
+---
+## 4. Cleanup
 To remove all resources created by this configuration, run the `destroy` command.
 
 ```bash
