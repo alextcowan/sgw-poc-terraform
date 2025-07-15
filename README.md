@@ -1,8 +1,8 @@
 # Chrome Enterprise Security Gateway with Terraform
 
-This repository contains Terraform scripts to deploy a Google Cloud BeyondCorp Security Gateway and associated applications. It provides a baseline for securing access to both a public and private web application.
+This repository contains Terraform scripts to deploy a Google Cloud Chrome Enterprise Premium Security Gateway and associated applications. It provides a baseline for securing access to both a public and private web application.
 
-In addition to the security gateway, it provides firewall rule configuration, and Cloud Storage bucket creation for PAC file hosting.
+In addition to the Security Gateway, it provides firewall rule configuration, and Cloud Storage bucket creation for PAC file hosting.
 
 ---
 ## Prerequisites
