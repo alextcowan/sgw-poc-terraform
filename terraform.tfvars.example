@@ -37,4 +37,4 @@ bucket_region = "australia-southeast1"
 bucket_name = "sbc-sgw-pac-bucket"
 
 # # The local path to the pac file to upload
-pac_file_path = "./sgw-pac.js"
+pac_file_path = "sgw-pac.js"
