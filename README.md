@@ -66,24 +66,7 @@ project_id = "your-gcp-project-id"
 region     = ["australia-southeast1"]
 # ... other variables
 ```
-#### **C. Modify PAC file**
-Modify the `const sites` portion of the included sgw-pac.js file to match your hostname matchers.  
-
-*Example `sgw-pac.js`:*
-```javascript
-function FindProxyForURL(url, host) {
-  const PROXY = "HTTPS ingress.cloudproxy.app:443";
-  const sites = ["ipify.org", "onprem.securebrowsing.cloud"];
-
-  for (const site of sites) {
-    if (shExpMatch(url, 'https://' + site + '/*') || shExpMatch(url, '*.' + site + '/*')) {
-      return PROXY;
-    }
-  }
-  return 'DIRECT';
-}
-```
-#### **D. Initialize and apply**
+#### **C. Initialize and apply**
 Initialize terraform to download the necessary plugins (it will use the local provider you just built) and then apply the configuration to create the resources.
 
 ```bash
