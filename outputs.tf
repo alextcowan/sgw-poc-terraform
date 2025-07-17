@@ -3,6 +3,10 @@ output "security_gateway_id" {
   value       = google_beyondcorp_security_gateway.default.security_gateway_id
 }
 
+output "security_gateway_resource" {
+  value       = google_beyondcorp_security_gateway.default.id
+}
+
 output "security_gateway_delegating_service_account" {
   value       = google_beyondcorp_security_gateway.default.delegating_service_account
 }
