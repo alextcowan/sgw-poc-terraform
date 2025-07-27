@@ -18,6 +18,12 @@ vpc_network = "projects/cep-project/global/networks/default"
 
 # # A map of application configurations to be created
  applications = {
+   "wiki" = {
+     display_name = "Wiki PWA"
+     hostnames    = ["wiki.onprem.securebrowsing.cloud"]
+     is_pwa       = true     
+     egress_regions = ["asia-south1"]
+   },
    "crm" = {
      display_name = "CRM PWA"
      hostnames    = ["crm.onprem.securebrowsing.cloud"]

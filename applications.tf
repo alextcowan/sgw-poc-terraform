@@ -26,9 +26,12 @@ resource "google_beyondcorp_security_gateway_application" "application" {
       network {
         name = var.vpc_network
       }
-      #egress_policy { #optional depending on VPC routing
-      #  regions = ["us-central1"]
-      #}
+      dynamic "egress_policy" {
+        for_each = each.value.egress_regions != null ? [1] : []
+        content {
+          regions = each.value.egress_regions
+        }
+      }
     }
   }
 

@@ -36,6 +36,7 @@ variable "applications" {
     display_name = string
     hostnames    = list(string)
     is_pwa     = bool
+    egress_regions = optional(list(string), null)
   }))
 }
 
