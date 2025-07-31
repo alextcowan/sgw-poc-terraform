@@ -80,6 +80,15 @@ Review the plan and type `yes` to proceed.
 ## 3. Chrome Configuration
 The admin will need to configure Chrome to leverage proxy mode via the Security Gateway and deployment of the Chrome Enterprise Premium extension.
 
+After the terraform has completed you can get information about the SGW components and the Admin Console configuration via an included python script.
+There are various commands which are described by the -h flag. 
+The 'config' argument will provide the necessary configuration settings for the Browser Proxy policy, and the Secure Enterprise Browser extension.
+
+```bash
+python sgw-display.py -h
+python sgw-display.py config
+```
+
 [Configure Google Chrome proxy mode](https://cloud.google.com/beyondcorp-enterprise/docs/security-gateway-saas-apps#configure-chrome-proxy)
 
 [Install the Chrome Enterprise Premium extension](https://cloud.google.com/beyondcorp-enterprise/docs/security-gateway-saas-apps#install-cep-extension)
