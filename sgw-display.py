@@ -225,23 +225,62 @@ def show_debug_info(config: dict):
         sys.stdout.close()
         sys.stdout = original_stdout
 
+def get_vpc_network_path():
+    """Gets the VPC network path for the current project."""
+    print("🔍 Determining VPC network path...")
+    try:
+        # Get the network name
+        network_name_cmd = "gcloud compute networks list --format='value(name)'"
+        network_name_result = subprocess.run(network_name_cmd, shell=True, check=True, capture_output=True, text=True)
+        network_name = network_name_result.stdout.strip()
+        if not network_name:
+            print("❌ No VPC network found for the current project.")
+            sys.exit(1)
+
+        # Describe the network to get the selfLink
+        describe_cmd = f"gcloud compute networks describe {network_name} --format='value(selfLink)'"
+        describe_result = subprocess.run(describe_cmd, shell=True, check=True, capture_output=True, text=True)
+        self_link = describe_result.stdout.strip()
+
+        # Process the URL to get the desired path
+        if 'projects/' in self_link:
+            network_path = self_link[self_link.find('projects/'):]
+            print(f"✅ VPC Network Path: {network_path}")
+        else:
+            print("❌ Could not parse the VPC network path from gcloud output.")
+            sys.exit(1)
+
+    except subprocess.CalledProcessError as e:
+        print(f"❌ Error executing gcloud command: {e}")
+        print(f"   Stderr: {e.stderr.strip()}")
+        sys.exit(1)
+    except Exception as e:
+        print(f"❌ An unexpected error occurred: {e}")
+        sys.exit(1)
+
 def main():
     """Main function to parse arguments and call the appropriate handler."""
     parser = argparse.ArgumentParser(
-        description="A helper script to interact with the Google Cloud Security Gateway API using values from terraform.tfvars.",
+        description="A helper script to interact with the Google Cloud Security Gateway API and other project resources.",
         formatter_class=argparse.RawTextHelpFormatter
     )
     parser.add_argument(
         'command',
-        choices=['gateway', 'applications', 'config', 'access', 'debug'],
+        choices=['gateway', 'applications', 'config', 'access', 'debug', 'vpc-network'],
         help="The type of information to display:\n"
              "  gateway      - Show details for the configured Security Gateway.\n"
              "  applications - List and show details for all associated applications.\n"
              "  config       - Show post-creation configuration for the Admin Console.\n"
              "  access       - Show IAM policies for the gateway and all applications.\n"
-             "  debug        - Display all details, and PAC file contents."
+             "  debug        - Display all details, and PAC file contents.\n"
+             "  vpc-network  - Get the full path of the project's VPC network."
     )
     args = parser.parse_args()
+    
+    if args.command == 'vpc-network':
+        get_vpc_network_path()
+        return
+
     config_vars = parse_tfvars(TFVARS_FILE)
 
     if args.command in ['gateway', 'applications', 'access', 'debug']:
@@ -261,6 +300,7 @@ def main():
             get_application_details(config_vars, token)
         elif args.command == 'access':
             get_access_policies(config_vars, token)
+
 
 if __name__ == "__main__":
     main()

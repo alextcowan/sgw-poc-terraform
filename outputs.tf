@@ -12,7 +12,8 @@ output "security_gateway_delegating_service_account" {
 }
 
 output "firewall_rule_name" {
-  value       = google_compute_firewall.security_gateway_ingress_firewall_rule.name
+  description = "The name of the firewall rule created for the security gateway."
+  value       = join("", google_compute_firewall.security_gateway_ingress_firewall_rule.*.name)
 }
 
 output "security_gateway_access_members" {

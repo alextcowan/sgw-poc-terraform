@@ -1,3 +1,7 @@
+locals {
+  pwa_app_exists = length([for app in var.applications : app if app.is_pwa]) > 0
+}
+
 #############################################################################
 ##
 ## Create Secure Web Gateway Instance, firewall rule, and IAM binding
@@ -22,6 +26,7 @@ resource "google_project_iam_member" "gateway_upstream_access_service_account_ia
 }
 
 resource "google_compute_firewall" "security_gateway_ingress_firewall_rule" {
+  count   = local.pwa_app_exists ? 1 : 0
   name    = "security-gateway-ingress-firewall-rule"
   network = var.vpc_network
   source_ranges = [
