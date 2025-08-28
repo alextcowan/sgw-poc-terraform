@@ -38,11 +38,11 @@ resource "google_beyondcorp_security_gateway_application" "application" {
   depends_on = [google_beyondcorp_security_gateway.default] 
 }
 
-resource "google_beyondcorp_application_iam_binding" "binding" {
+resource "google_beyondcorp_security_gateway_application_iam_binding" "binding" {
   for_each = var.applications
 
-  security_gateways_id = google_beyondcorp_security_gateway.default.security_gateway_id
-  application_id       = "${each.key}"
-  role                 = "roles/beyondcorp.securityGatewayUser"
-  members = var.access_members
+  security_gateway_id = google_beyondcorp_security_gateway.default.security_gateway_id
+  application_id      = google_beyondcorp_security_gateway_application.application[each.key].application_id
+  role                = "roles/beyondcorp.securityGatewayUser"
+  members             = var.access_members
 }

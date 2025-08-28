@@ -51,7 +51,7 @@ output "applications" {
 
 output "application_iam_bindings" {
   value = {
-    for key, binding in google_beyondcorp_application_iam_binding.binding : key => {
+    for key, binding in google_beyondcorp_security_gateway_application_iam_binding.binding : key => {
       role    = binding.role
       members = binding.members
     }
