@@ -37,9 +37,3 @@ resource "google_compute_firewall" "security_gateway_ingress_firewall_rule" {
     protocol = "all"
   }
 }
-
-resource "google_beyondcorp_security_gateway_iam_binding" "gw_binding" {
-  security_gateway_id = google_beyondcorp_security_gateway.default.security_gateway_id
-  role                 = "roles/beyondcorp.securityGatewayUser"
-  members = var.access_members
-}

@@ -16,10 +16,6 @@ output "firewall_rule_name" {
   value       = join("", google_compute_firewall.security_gateway_ingress_firewall_rule.*.name)
 }
 
-output "security_gateway_access_members" {
-  value       = google_beyondcorp_security_gateway_iam_binding.gw_binding.members
-}
-
 output "security_gateway_hub_ips" {
   value = {
     for hub in google_beyondcorp_security_gateway.default.hubs :
@@ -49,11 +45,11 @@ output "applications" {
   }
 }
 
-output "application_iam_bindings" {
+output "application_iam_policies" {
   value = {
-    for key, binding in google_beyondcorp_security_gateway_application_iam_binding.binding : key => {
-      role    = binding.role
-      members = binding.members
+    for key, policy in data.google_iam_policy.policy : key => {
+      role    = tolist(policy.binding)[0].role
+      members = tolist(policy.binding)[0].members
     }
   }
 }

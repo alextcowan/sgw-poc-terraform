@@ -14,6 +14,7 @@ region = ["asia-south1"]
 access_members = ["group:sgw-users@securebrowsing.cloud"]
 
 # # Full resource name of VPC network
+# # Required for Private Web Apps
 vpc_network = "projects/cep-project/global/networks/default"
 
 # # A map of application configurations to be created
@@ -22,16 +23,19 @@ vpc_network = "projects/cep-project/global/networks/default"
      display_name = "Wiki PWA"
      hostnames    = ["wiki.onprem.securebrowsing.cloud"]
      is_pwa       = true     
+     # # Optional - Which region connection is established via, check Help Center for on-prem w/ static routing considerations
      egress_regions = ["asia-south1"]
    },
    "crm" = {
      display_name = "CRM PWA"
      hostnames    = ["crm.onprem.securebrowsing.cloud"]
      is_pwa       = true
+     # # Optional - Access Level as named/defined in Access Context Manager
+     access_level = "accessPolicies/573185158843/accessLevels/ismanagedbrowser_54n2qzgp"
    },
    "ipify" = {
      display_name = "ipify"
-     hostnames    = ["ipify.org"]
+     hostnames    = ["*.ipify.org"]
      is_pwa       = false
    }
  }

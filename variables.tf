@@ -33,10 +33,11 @@ variable "applications" {
   description = "A map of application configurations to be created"
   
   type = map(object({
-    display_name = string
-    hostnames    = list(string)
-    is_pwa     = bool
+    display_name   = string
+    hostnames      = list(string)
+    is_pwa         = bool
     egress_regions = optional(list(string), null)
+    access_level   = optional(string, null)
   }))
 }
 
