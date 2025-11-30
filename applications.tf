@@ -15,6 +15,7 @@ resource "google_beyondcorp_security_gateway_application" "application" {
     for_each = each.value.hostnames
     content {
       hostname = endpoint_matchers.value
+      ports = lookup(each.value,"ports",[443])
     }
   }
 
